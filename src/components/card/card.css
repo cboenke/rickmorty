@@ -1,0 +1,24 @@
+.card {
+  display: grid;
+  grid-auto-flow: row;
+  justify-items: center;
+  border: black solid 1px;
+  border-radius: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+.card__origin {
+  padding-bottom: 10px;
+}
+
+.card__portrait {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card__status {
+  padding-bottom: 10px;
+}
