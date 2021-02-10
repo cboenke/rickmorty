@@ -72,8 +72,10 @@ export async function getCharacter(id: number) {
   return character;
 }
 
-export async function getCharacters() {
-  const response = await fetch(`https://rickandmortyapi.com/api/character/`);
+export async function getCharacters(name?: string) {
+  const response = await fetch(
+    `https://rickandmortyapi.com/api/character/${name ? `?name=${name}` : ""}`
+  );
   if (!response.ok) {
     return [];
   }
