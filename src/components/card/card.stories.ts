@@ -1,7 +1,12 @@
 import "./card.css";
 import { createCard } from "./card";
 import { createElement } from "../../utils/createElement";
-import { getCharacter, getCharacters } from "../../utils/api";
+import {
+  getRandomNumber,
+  Character,
+  getCharacter,
+  getCharacters,
+} from "../../utils/api";
 
 export default {
   title: "Components/Card",
@@ -27,7 +32,7 @@ export const Morty = () =>
   });
 
 export const Multiple = () => {
-  const characters = [
+  const characters: Character[] = [
     {
       imgSrc: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
       name: "Morty Smith",
@@ -59,17 +64,33 @@ export const Multiple = () => {
   return container;
 };
 
-export const CharacterFromApi = (args, { loaded: { character } }) => {
+type CharacterFromAPIProps = {
+  loaded: {
+    character: Character;
+  };
+};
+export const CharacterFromAPI = (
+  args,
+  { loaded: { character } }: CharacterFromAPIProps
+) => {
   return createCard(character);
 };
 
-CharacterFromApi.loaders = [
+CharacterFromAPI.loaders = [
   async () => ({
     character: await getCharacter(57),
   }),
 ];
 
-export const CharactersFromApi = (args, { loaded: { characters } }) => {
+type CharactersFromAPIProps = {
+  loaded: {
+    characters: Character[];
+  };
+};
+export const CharactersFromAPI = (
+  args,
+  { loaded: { characters } }: CharactersFromAPIProps
+) => {
   const container = createElement("div", {
     className: "container",
     childs: characters.map((character) => createCard(character)),
@@ -77,8 +98,27 @@ export const CharactersFromApi = (args, { loaded: { characters } }) => {
   return container;
 };
 
-CharactersFromApi.loaders = [
+CharactersFromAPI.loaders = [
   async () => ({
     characters: await getCharacters(),
   }),
 ];
+
+export const RandomCharacter = () => {
+  const randomButton = createElement("button", {
+    innerText: "Load random character",
+    onclick: async () => {
+      const randomCharacter = await getCharacter(getRandomNumber(1, 671));
+      if (container.childNodes.length > 1) {
+        container.removeChild(container.lastChild);
+      }
+      container.append(createCard(randomCharacter));
+    },
+  });
+
+  const container = createElement("div", {
+    className: "container",
+    childs: [randomButton],
+  });
+  return container;
+};
