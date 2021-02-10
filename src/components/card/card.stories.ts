@@ -122,3 +122,32 @@ export const RandomCharacter = () => {
   });
   return container;
 };
+
+export const FilterByName = (args, { loaded: { characters } }) => {
+  const input = createElement("input", {
+    onchange: async () => {
+      const newCharacters = await getCharacters(input.value);
+      const newCards = newCharacters.map((character) => createCard(character));
+      characterContainer.innerHTML = "";
+      characterContainer.append(...newCards);
+    },
+  });
+
+  const characterContainer = createElement("div", {
+    className: "container",
+    childs: characters.map((character) => createCard(character)),
+  });
+
+  const container = createElement("div", {
+    className: "",
+    childs: [input, characterContainer],
+  });
+
+  return container;
+};
+
+FilterByName.loaders = [
+  async () => ({
+    characters: await getCharacters(),
+  }),
+];
