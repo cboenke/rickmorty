@@ -83,3 +83,7 @@ export async function getCharacters() {
   );
   return characters;
 }
+
+export function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
