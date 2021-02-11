@@ -44,7 +44,7 @@ export function createCard({ imgSrc, name, status, species, origin }) {
             className: "card__back",
             childs: [
               createElement("p", {
-                className: "card__back__inner",
+                className: "card__back--inner",
                 innerText: "Location",
               }),
             ],
